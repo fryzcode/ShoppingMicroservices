@@ -24,4 +24,6 @@ var app = builder.Build();
 //Conf http req pipeline
 app.MapCarter();
 
+app.UseExceptionHandler();
+
 app.Run();
