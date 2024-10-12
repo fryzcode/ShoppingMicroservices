@@ -56,11 +56,27 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/Basket.API.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=testmyapp
       - ConnectionStrings__Redis=distributedcache:6379
+      - GrpcSettings__Discount=https://discount.grpc:8081
     depends_on:
       - basketdb
       - distributedcache
+      - discount.grpc
     ports:
       - "6001:8080"
       - "6061:8081"
+    volumes:
+      - /Users/faryazhajimuradov/.aspnet/https:/home/app/.aspnet/https:ro
+        
+  discount.grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Data Source=discountdb
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/Discount.Grpc.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=testmyapp
+    ports:
+      - "6002:8080"
+      - "6062:8081"
     volumes:
       - /Users/faryazhajimuradov/.aspnet/https:/home/app/.aspnet/https:ro
