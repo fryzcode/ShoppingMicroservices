@@ -5,7 +5,6 @@ using Ordering.Domain.Models;
 using Ordering.Domain.ValueObjects;
 
 namespace Ordering.Infrastructure.Data.Configurations;
-
 public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
@@ -13,13 +12,13 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.HasKey(o => o.Id);
 
         builder.Property(o => o.Id).HasConversion(
-            orderId => orderId.Value,
-            dbId => OrderId.Of(dbId));
-        
+                        orderId => orderId.Value,
+                        dbId => OrderId.Of(dbId));
+
         builder.HasOne<Customer>()
-            .WithMany()
-            .HasForeignKey(o => o.CustomerId)
-            .IsRequired();
+          .WithMany()
+          .HasForeignKey(o => o.CustomerId)
+          .IsRequired();
 
         builder.HasMany(o => o.OrderItems)
             .WithOne()

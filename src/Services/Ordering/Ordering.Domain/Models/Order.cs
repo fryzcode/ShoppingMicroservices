@@ -15,7 +15,7 @@ public class Order : Aggregate<OrderId>
         get => OrderItems.Sum(x => x.Price * x.Quantity);
         private set { }
     }
-    
+
     public static Order Create(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
     {
         var order = new Order
